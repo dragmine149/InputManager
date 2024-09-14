@@ -22,8 +22,10 @@ To use the UI in a scene, add the `InputManagerMenu` node to the scene tree. Whe
 
 ### Categorisation
 Inputs can be categorised. To do this, either:
+
 	- Use a `-` in the name upon adding inputs to the InputMap. E.g. `Player-Walk Forward`
 	- Use `InputManager.add_input("Player/Walk Forward", InputEvent);`
+
 Categorise act just like folders, so categorise can be categorised.
 
 ## Settings
@@ -54,6 +56,7 @@ Useful for in-line settings and if you want to use a different menu layout that 
 
 ## Planned features
 (Don't know when they will be added though)
+
 - Controller icons
 - Better customisable input count (for built in ui)
 
@@ -61,6 +64,6 @@ Useful for in-line settings and if you want to use a different menu layout that 
 To uninstall, disable the plugin and then remove the folder. By doing so, settings and the autoload will be removed automatically.
 
 ## Credits
-[https://icons8.com/icon/71cUHRMvCNMk/mac-folder](Folder) icon by [https://icons8.com](Icons8)
-[https://icons8.com/icon/eRF9ENKlYAVl/mouse](Mouse) icon by [https://icons8.com](Icons8)
-[https://icons8.com/icon/QA1_AvHyXWnM/f5-key](F5 Key) icon by [https://icons8.com](Icons8)
+- [https://icons8.com/icon/71cUHRMvCNMk/mac-folder](Folder) icon by [https://icons8.com](Icons8)
+- [https://icons8.com/icon/eRF9ENKlYAVl/mouse](Mouse) icon by [https://icons8.com](Icons8)
+- [https://icons8.com/icon/QA1_AvHyXWnM/f5-key](F5 Key) icon by [https://icons8.com](Icons8)
