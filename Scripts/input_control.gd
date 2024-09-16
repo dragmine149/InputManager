@@ -22,10 +22,7 @@ func _get_input_or_empty(input_list: Array[InputEvent], index: int) -> String:
 	var input_info := input_list[index];
 	if input_info == null:
 		return "(Not assigned)";
-	if input_info is InputEventKey:
-		var keycode = DisplayServer.keyboard_get_keycode_from_physical(input_info.physical_keycode)
-		return OS.get_keycode_string(keycode);
-	return input_info.as_text();
+	return InputManager.get_input_text(input_info);
 
 
 func set_in_line(state: bool) -> void:

@@ -34,7 +34,7 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		return;
 
-	input.text = event.as_text();
+	input.text = InputManager.get_input_text(event);
 	submit.disabled = false;
 	new_input = event;
 
@@ -56,7 +56,7 @@ func load_input(key: String, index: int) -> void:
 		old_input = inputs[index];
 
 	title.text = "Please enter input for: %s" % key;
-	input.text = "Old input: %s\n\nWaiting for input..." % (old_input.as_text() if old_input != null else "None");
+	input.text = "Old input: %s\n\nWaiting for input..." % (InputManager.get_input_text(old_input) if old_input != null else "None");
 	can_input = true;
 	submit.disabled = true;
 

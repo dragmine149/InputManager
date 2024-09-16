@@ -74,7 +74,7 @@ func _init() -> void:
 
 		if _verbose:
 			print_rich("[color=dark-cyan]Adding input with no events[/color]");
-		add_input_no_event(action);
+		add_input(action);
 
 #region InputManager
 
@@ -84,8 +84,12 @@ func _add_user_signal(input_name: String) -> void:
 		add_user_signal("input_%s_changed" % input_name);
 
 
-func add_input_no_event(input_name: String) -> void:
+## Backend for [method add_input]
+func _add_input_no_event(input_name: String) -> Array[InputEvent]:
 	input_name = to_map_name(input_name);
+	if _inputs.has(input_name):
+		return _inputs.get(input_name);
+
 	var empty: Array[InputEvent] = [null, null];
 	_inputs.set(input_name, empty);
 
@@ -94,32 +98,30 @@ func add_input_no_event(input_name: String) -> void:
 		InputMap.add_action(input_name);
 
 	_add_user_signal(input_name);
+	return empty;
 
 
 ## Add another input under a specified name
 ## [br]
 ## [br][b]input_name -[/b] The name of the input to add a new input to
-## [br][b]input_event -[/b] The event to add to the input
-func add_input(input_name: String, input_event: InputEvent) -> void:
-	if not _inputs.has(to_map_name(input_name)):
-		add_input_no_event(input_name);
-
-	_add_user_signal(input_name);
+## [br][b]input_event -[/b] The event to add to the input. Leaving blank will just add the actio with no event.
+func add_input(input_name: String, input_event: InputEvent = null) -> void:
 	input_name = to_map_name(input_name);
-	var input: Array[InputEvent] = _inputs.get(input_name);
-	var next_pos = input.find(null);
-	# don't like this...
-	if next_pos == -1:
-		input.append(input_event);
-	else:
-		input[next_pos] = input_event;
+	var input = _add_input_no_event(input_name);
+	if input_event != null:
+		var next_pos = input.find(null);
+		# don't like this...
+		if next_pos == -1:
+			input.append(input_event);
+		else:
+			input[next_pos] = input_event;
 
-	if not InputMap.action_has_event(input_name, input_event):
-		InputMap.action_add_event(input_name, input_event);
+		if not InputMap.action_has_event(input_name, input_event):
+			InputMap.action_add_event(input_name, input_event);
 
 	_inputs.set(input_name, input);
 
-	if _call_change:
+	if _call_change and input_event != null:
 		emit_signal("input_%s_changed" % input_name.replace(' ', '_'));
 
 
@@ -215,7 +217,7 @@ func get_input_categories(input_category: String = "") -> Array:
 
 
 ## Removes a specific input from the list.
-##
+## [br]
 ## [br][b]input_name -[/b] The name of the input to remove the item from
 ## [br][b]index -[/b] The position of the old one to remove.
 func remove_input(input_name: String, index: int) -> void:
@@ -228,6 +230,18 @@ func remove_input(input_name: String, index: int) -> void:
 	if _call_change:
 		emit_signal("input_%s_changed" % input_name.replace(' ', '_'));
 
+
+## Erases all existance of that input. Unlike [remove_input] which only does the index/action
+## [br]
+## [br][b]input_name -[/b] The name of the input to erase.
+## [br][b]remove_signal -[/b] To also remove the signal upon removing the input.
+func erase_input(input_name: String, remove_signal: bool = true) -> void:
+	input_name = to_map_name(input_name);
+	_inputs.set(input_name, null);
+	if InputMap.has_action(input_name):
+		InputMap.erase_action(input_name);
+	if remove_signal:
+		remove_user_signal("input_%s_changed" % input_name.replace(' ', '_'));
 
 ## Returns the input name as it would be as a map name. Useful in situations like [method Input.is_action_pressed]
 ## whilst keeping the categorisation ability
@@ -258,6 +272,9 @@ func save_inputs() -> void:
 
 
 ## Load inputs from a given file or from the default path if no file is given.
+## [br]
+## [br][b]file_path -[/b] The path to load from. If not provided, will use the default path as set in
+## ProjectSettings/addons/InputManager
 func load_inputs(file_path: String = "") -> void:
 	if file_path == "" or file_path == null:
 		file_path = save_path;
@@ -266,11 +283,36 @@ func load_inputs(file_path: String = "") -> void:
 	on_inputs_loaded.emit();
 
 
+## Export the inputs to use / save in a different file
 func export_inputs() -> InputController:
 	return _inputs;
 
 
+## Import inputs from a different place.
+## [br]
+## [br][b]inputs -[/b] The inputs to load.
 func import_inputs(inputs: InputController) -> void:
-	_inputs = inputs;
+	for action in _inputs.get_names().duplicate():
+		erase_input(action, false);
+
+	_inputs = InputController.new();
+	for action in inputs.get_names():
+		add_input(action, inputs.get(action));
+
+#endregion
+
+#region Display
+
+## Get a text display localised to the users keyboard layout + modifiers.
+## [br]If the input is not a key, will return the input text instead.
+## [br]
+## [br][b]input -[/b] The input to get the text for.
+func get_input_text(input:InputEvent) -> String:
+	if not input is InputEventKey:
+		return input.as_text();
+
+	var physical_key_modifier = input.get_physical_keycode_with_modifiers();
+	var keycode = DisplayServer.keyboard_get_keycode_from_physical(physical_key_modifier);
+	return OS.get_keycode_string(keycode);
 
 #endregion
