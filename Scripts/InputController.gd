@@ -18,7 +18,7 @@ func _get(property: StringName) -> Variant:
 
 
 func _set(property: StringName, value: Variant) -> bool:
-	if value is not Array[InputEvent]:
+	if not value is Array[InputEvent]:
 		return false;
 
 	inputs[property] = value;
