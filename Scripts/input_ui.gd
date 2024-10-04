@@ -12,6 +12,7 @@ var new_input: InputEvent;
 
 @onready var title: Label = $VBoxContainer/Title;
 @onready var input: Label = $VBoxContainer/Input;
+@onready var icon: TextureRect = $VBoxContainer/Icon;
 @onready var controls: HBoxContainer = $VBoxContainer/HBoxContainer;
 @onready var cancel: Button = $VBoxContainer/HBoxContainer/Cancel;
 @onready var submit: Button = $VBoxContainer/HBoxContainer/Submit;
@@ -34,6 +35,7 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		return;
 
+	icon.texture = load(InputManager.get_icon_path(event));
 	input.text = InputManager.get_input_text(event);
 	submit.disabled = false;
 	new_input = event;

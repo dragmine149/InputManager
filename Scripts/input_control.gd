@@ -22,6 +22,7 @@ func _get_input_or_empty(input_list: Array[InputEvent], index: int) -> String:
 	var input_info := input_list[index];
 	if input_info == null:
 		return "(Not assigned)";
+	InputManager.get_icon_path(input_info);
 	return InputManager.get_input_text(input_info);
 
 

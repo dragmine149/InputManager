@@ -315,4 +315,47 @@ func get_input_text(input:InputEvent) -> String:
 	var keycode = DisplayServer.keyboard_get_keycode_from_physical(physical_key_modifier);
 	return OS.get_keycode_string(keycode);
 
+
+const KEYBOARD_TO_IMAGES := {
+	65: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_a.png",
+	66: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_b.png",
+	67: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_c.png",
+	68: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_d.png",
+	69: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_e.png",
+	70: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_f.png",
+	71: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_g.png",
+	72: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_h.png",
+	73: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_i.png",
+	74: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_j.png",
+	75: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_k.png",
+	76: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_l.png",
+	77: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_m.png",
+	78: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_n.png",
+	79: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_o.png",
+	80: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_p.png",
+	81: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_q.png",
+	82: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_r.png",
+	83: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_s.png",
+	84: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_t.png",
+	85: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_u.png",
+	86: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_v.png",
+	87: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_w.png",
+	88: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_x.png",
+	89: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_y.png",
+	90: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_z.png",
+	4194306: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_tab.png",
+	4194325: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_shift.png",
+	4194326: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_ctrl.png",
+	4194327: "",
+	4194328: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_alt.png",
+}
+
+func get_icon_path(input: InputEvent) -> String:
+	print_debug(input);
+	if input is InputEventKey:
+		if KEYBOARD_TO_IMAGES.has(input.keycode):
+			return KEYBOARD_TO_IMAGES[input.keycode];
+
+	return "";
+
 #endregion
