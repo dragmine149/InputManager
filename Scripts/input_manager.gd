@@ -346,16 +346,47 @@ const KEYBOARD_TO_IMAGES := {
 	4194306: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_tab.png",
 	4194325: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_shift.png",
 	4194326: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_ctrl.png",
-	4194327: "",
+	4194327: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_win.png",
 	4194328: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_alt.png",
 }
 
-func get_icon_path(input: InputEvent) -> String:
-	print_debug(input);
-	if input is InputEventKey:
-		if KEYBOARD_TO_IMAGES.has(input.keycode):
-			return KEYBOARD_TO_IMAGES[input.keycode];
+const modifier_to_id := {
+	"Shitft": 4194325,
+	"Ctrl": 4194326,
+	"Meta": 4194327,
+	"Alt": 4194328
+}
 
-	return "";
+func get_icon_path(input: InputEvent) -> Array[String]:
+	print_debug(input);
+	if input is not InputEventKey:
+		return [""];
+
+	var a:InputEventKey;
+	#var code = a.get_keycode_with_modifiers();
+	#print(input.get_modifiers_mask());
+	var code = input.get_keycode_with_modifiers();
+	#print(code);
+
+	## TODO (although a bit messy): Get the string and split the string. From that string get the icons and return them as an array.
+	## Then we'll sort the rest out.
+
+	## TODO (alterantive): Do maths to see if certain keys fit in the icon. More complicated as multiple keys could be in the same icon.
+
+	var keycode_info := OS.get_keycode_string(code);
+	var modifiers := keycode_info.split('+');
+
+	var modifier_array: Array[String] = [];
+	for modifier in modifiers:
+		if not modifier_to_id.has(modifier):
+			continue;
+		var id = modifier_to_id[modifier];
+		modifier_array.append(KEYBOARD_TO_IMAGES[id]);
+
+	if KEYBOARD_TO_IMAGES.has(input.keycode):
+		modifier_array.append(KEYBOARD_TO_IMAGES[input.keycode]);
+		return modifier_array;
+
+	return modifier_array;
 
 #endregion

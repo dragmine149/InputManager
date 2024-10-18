@@ -11,8 +11,7 @@ var save_index: int = 1;
 var new_input: InputEvent;
 
 @onready var title: Label = $VBoxContainer/Title;
-@onready var input: Label = $VBoxContainer/Input;
-@onready var icon: TextureRect = $VBoxContainer/Icon;
+@onready var input_display: InputDisplayUI = $VBoxContainer/Inputs;
 @onready var controls: HBoxContainer = $VBoxContainer/HBoxContainer;
 @onready var cancel: Button = $VBoxContainer/HBoxContainer/Cancel;
 @onready var submit: Button = $VBoxContainer/HBoxContainer/Submit;
@@ -35,8 +34,11 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		return;
 
-	icon.texture = load(InputManager.get_icon_path(event));
-	input.text = InputManager.get_input_text(event);
+	input_display.set_images_and_text(
+		InputManager.get_icon_path(event),
+		InputManager.get_input_text(event)
+	);
+
 	submit.disabled = false;
 	new_input = event;
 
@@ -58,7 +60,8 @@ func load_input(key: String, index: int) -> void:
 		old_input = inputs[index];
 
 	title.text = "Please enter input for: %s" % key;
-	input.text = "Old input: %s\n\nWaiting for input..." % (InputManager.get_input_text(old_input) if old_input != null else "None");
+	var old_input_text := InputManager.get_input_text(old_input) if old_input != null else "None";
+	input_display.set_text("Old input: %s\n\nWaiting for input..." % old_input_text);
 	can_input = true;
 	submit.disabled = true;
 
