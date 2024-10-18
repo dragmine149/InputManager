@@ -13,17 +13,17 @@ func _enter_tree() -> void:
 	create_project_settings("input_count", 2, TYPE_INT, PROPERTY_HINT_RANGE, "1,2");
 	create_project_settings("save_path", "user://inputs.tres", TYPE_STRING);
 	create_project_settings("verbose", false, TYPE_BOOL);
-	create_project_settings("icons/folder", "res://addons/input_manager/Assets/Kenney_input-prompts", TYPE_STRING, PROPERTY_HINT_DIR);
-	create_project_settings("icons/user_icons", true, TYPE_BOOL);
-	create_project_settings("icons/keyboard/folder", "Keyboard & Mouse/Double", TYPE_STRING);
-	create_project_settings("icons/keyboard/mouse", "Keyboard & Mouse/Double", TYPE_STRING);
+	create_project_settings("icons/folder/main_folder", "res://addons/input_manager/Assets/kenney_input-prompts", TYPE_STRING, PROPERTY_HINT_DIR);
+	create_project_settings("icons/display_icons_if_possible", true, TYPE_BOOL);
+	create_project_settings("icons/folder/keyboard", "Keyboard & Mouse/Double", TYPE_STRING);
+	create_project_settings("icons/folder/mouse", "Keyboard & Mouse/Double", TYPE_STRING);
 	add_icon_settings();
 
 
 func _exit_tree() -> void:
 	remove_autoload_singleton("InputManager");
 	remove_export_plugin(export_plugin);
-	export_plugin.free();
+	#export_plugin.free();
 
 
 func _disable_plugin() -> void:
@@ -37,12 +37,13 @@ func _disable_plugin() -> void:
 			continue;
 		ProjectSettings.set_setting(setting, null);
 
+
 func create_project_settings(setting_name: String, setting_default_value: Variant, setting_type: Variant.Type,
 			setting_hint: PropertyHint = PROPERTY_HINT_NONE, setting_hint_string: String = "") -> void:
 	var setting_full_path = setting_path + setting_name;
 	if not ProjectSettings.has_setting(setting_full_path):
 		ProjectSettings.set_setting(setting_full_path, setting_default_value);
-		ProjectSettings.set_initial_value(setting_full_path, setting_default_value);
+		#ProjectSettings.set_initial_value(setting_full_path, setting_default_value);
 	ProjectSettings.add_property_info({
 		"name": setting_full_path,
 		"type": setting_type,
@@ -105,7 +106,7 @@ func add_icon_settings() -> void:
 	create_project_settings("icons/keyboard/colon", "keyboard_colon.png", TYPE_STRING);
 	create_project_settings("icons/keyboard/comma", "keyboard_comma.png", TYPE_STRING);
 	create_project_settings("icons/keyboard/command", "keyboard_commamnd.png", TYPE_STRING);
-	create_project_settings("icons/keyboard/command", "keyboard_commamnd.png", TYPE_STRING);
+	create_project_settings("icons/keyboard/control", "keyboard_ctrl.png", TYPE_STRING);
 	create_project_settings("icons/keyboard/delete", "keyboard_delete.png", TYPE_STRING);
 	create_project_settings("icons/keyboard/end", "keyboard_end.png", TYPE_STRING);
 	create_project_settings("icons/keyboard/enter", "keyboard_enter.png", TYPE_STRING);
@@ -127,6 +128,7 @@ func add_icon_settings() -> void:
 	create_project_settings("icons/keyboard/Function (Fn)", "keyboard_function.png", TYPE_STRING);
 	create_project_settings("icons/keyboard/home", "keyboard_home.png", TYPE_STRING);
 	create_project_settings("icons/keyboard/insert", "keyboard_insert.png", TYPE_STRING);
+	create_project_settings("icons/keyboard/meta", "keyboard_win.png", TYPE_STRING);
 	create_project_settings("icons/keyboard/minus", "keyboard_minus.png", TYPE_STRING);
 	create_project_settings("icons/keyboard/numlock", "keyboard_numlock.png", TYPE_STRING);
 	create_project_settings("icons/keyboard/numpad_enter", "keyboard_numpad_enter.png", TYPE_STRING);
@@ -147,7 +149,6 @@ func add_icon_settings() -> void:
 	create_project_settings("icons/keyboard/space", "keyboard_space.png", TYPE_STRING);
 	create_project_settings("icons/keyboard/tab", "keyboard_tab_icon.png", TYPE_STRING);
 	create_project_settings("icons/keyboard/tilde", "keyboard_tilde.png", TYPE_STRING);
-	create_project_settings("icons/keyboard/windows", "keyboard_win.png", TYPE_STRING);
 
 	create_project_settings("icons/mouse/left click ", "mouse_left.png", TYPE_STRING);
 	create_project_settings("icons/mouse/right click", "mouse_right.png", TYPE_STRING);

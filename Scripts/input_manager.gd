@@ -303,6 +303,13 @@ func import_inputs(inputs: InputController) -> void:
 
 #region Display
 
+func _get_icon_path(icon_name: String, icon_group: String) -> String:
+	return "%s/%s/%s" % [
+		ProjectSettings.get_setting("addons/InputManager/icons/folder/main_folder"),
+		ProjectSettings.get_setting("addons/InputManager/icons/folder/%s" % icon_group),
+		ProjectSettings.get_setting("addons/InputManager/icons/%s/%s" % [icon_group, icon_name])
+	];
+
 ## Get a text display localised to the users keyboard layout + modifiers.
 ## [br]If the input is not a key, will return the input text instead.
 ## [br]
@@ -317,75 +324,55 @@ func get_input_text(input:InputEvent) -> String:
 
 
 const KEYBOARD_TO_IMAGES := {
-	65: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_a.png",
-	66: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_b.png",
-	67: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_c.png",
-	68: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_d.png",
-	69: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_e.png",
-	70: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_f.png",
-	71: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_g.png",
-	72: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_h.png",
-	73: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_i.png",
-	74: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_j.png",
-	75: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_k.png",
-	76: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_l.png",
-	77: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_m.png",
-	78: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_n.png",
-	79: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_o.png",
-	80: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_p.png",
-	81: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_q.png",
-	82: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_r.png",
-	83: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_s.png",
-	84: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_t.png",
-	85: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_u.png",
-	86: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_v.png",
-	87: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_w.png",
-	88: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_x.png",
-	89: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_y.png",
-	90: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_z.png",
-	4194306: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_tab.png",
-	4194325: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_shift.png",
-	4194326: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_ctrl.png",
-	4194327: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_win.png",
-	4194328: "res://addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double/keyboard_alt.png",
-}
-
-const modifier_to_id := {
-	"Shitft": 4194325,
-	"Ctrl": 4194326,
-	"Meta": 4194327,
-	"Alt": 4194328
+	65: ["a", "keyboard"],
+		66: ["b", "keyboard"],
+	67: ["c", "keyboard"],
+	68: ["d", "keyboard"],
+	69: ["e", "keyboard"],
+	70: ["f", "keyboard"],
+	71: ["g", "keyboard"],
+	72: ["h", "keyboard"],
+	73: ["i", "keyboard"],
+	74: ["j", "keyboard"],
+	75: ["k", "keyboard"],
+	76: ["l", "keyboard"],
+	77: ["m", "keyboard"],
+	78: ["n", "keyboard"],
+	79: ["o", "keyboard"],
+	80: ["p", "keyboard"],
+	81: ["q", "keyboard"],
+	82: ["r", "keyboard"],
+	83: ["s", "keyboard"],
+	84: ["t", "keyboard"],
+	85: ["u", "keyboard"],
+	86: ["v", "keyboard"],
+	87: ["w", "keyboard"],
+	88: ["x", "keyboard"],
+	89: ["y", "keyboard"],
+	90: ["z", "keyboard"],
+	4194306: ["tab", "keyboard"],
+	4194325: ["shift", "keyboard"],
+	4194326: ["control", "keyboard"],
+	4194327: ["meta", "keyboard"],
+	4194328: ["alt", "keyboard"]
 }
 
 func get_icon_path(input: InputEvent) -> Array[String]:
-	print_debug(input);
 	if input is not InputEventKey:
+		# TODO: Sort out the other inputs later...
 		return [""];
 
-	var a:InputEventKey;
-	#var code = a.get_keycode_with_modifiers();
-	#print(input.get_modifiers_mask());
 	var code = input.get_keycode_with_modifiers();
-	#print(code);
-
-	## TODO (although a bit messy): Get the string and split the string. From that string get the icons and return them as an array.
-	## Then we'll sort the rest out.
-
-	## TODO (alterantive): Do maths to see if certain keys fit in the icon. More complicated as multiple keys could be in the same icon.
 
 	var keycode_info := OS.get_keycode_string(code);
 	var modifiers := keycode_info.split('+');
 
 	var modifier_array: Array[String] = [];
 	for modifier in modifiers:
-		if not modifier_to_id.has(modifier):
-			continue;
-		var id = modifier_to_id[modifier];
-		modifier_array.append(KEYBOARD_TO_IMAGES[id]);
-
-	if KEYBOARD_TO_IMAGES.has(input.keycode):
-		modifier_array.append(KEYBOARD_TO_IMAGES[input.keycode]);
-		return modifier_array;
+		var code_from_modifier := OS.find_keycode_from_string(modifier);
+		if KEYBOARD_TO_IMAGES.has(code_from_modifier):
+			var icon_info: PackedStringArray = KEYBOARD_TO_IMAGES[code_from_modifier];
+			modifier_array.append(_get_icon_path(icon_info[0], icon_info[1]));
 
 	return modifier_array;
 
