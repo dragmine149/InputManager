@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bpy7plhu27uh0"]
+[gd_scene load_steps=4 format=3 uid="uid://bpy7plhu27uh0"]
 
 [ext_resource type="Script" path="res://addons/input_manager/Scripts/input_control.gd" id="1_tgose"]
 [ext_resource type="Script" path="res://addons/input_manager/Scripts/InputManagerListener.gd" id="2_55yr5"]
+[ext_resource type="PackedScene" uid="uid://daeaihfaq7kn0" path="res://addons/input_manager/Scenes/input_images.tscn" id="3_awtdg"]
 
 [node name="InputControl" type="HBoxContainer"]
 anchors_preset = 15
@@ -21,19 +22,20 @@ size_flags_horizontal = 3
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Not Assinged"
 
 [node name="InputManagerListener" type="Node" parent="Input1"]
 script = ExtResource("2_55yr5")
+
+[node name="Inputs" parent="Input1" instance=ExtResource("3_awtdg")]
+layout_mode = 1
 
 [node name="Input2" type="Button" parent="."]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Not Assinged"
 
 [node name="InputManagerListener" type="Node" parent="Input2"]
 script = ExtResource("2_55yr5")
 
-[connection signal="pressed" from="Input1" to="." method="_on_input_pressed" binds= [0]]
-[connection signal="pressed" from="Input2" to="." method="_on_input_pressed" binds= [1]]
+[node name="Inputs" parent="Input2" instance=ExtResource("3_awtdg")]
+layout_mode = 1

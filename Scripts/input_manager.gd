@@ -315,6 +315,9 @@ func _get_icon_path(icon_name: String, icon_group: String) -> String:
 ## [br]
 ## [br][b]input -[/b] The input to get the text for.
 func get_input_text(input:InputEvent) -> String:
+	if input == null:
+		return "(Not Assigned)";
+
 	if not input is InputEventKey:
 		return input.as_text();
 
@@ -325,7 +328,7 @@ func get_input_text(input:InputEvent) -> String:
 
 const KEYBOARD_TO_IMAGES := {
 	65: ["a", "keyboard"],
-		66: ["b", "keyboard"],
+	66: ["b", "keyboard"],
 	67: ["c", "keyboard"],
 	68: ["d", "keyboard"],
 	69: ["e", "keyboard"],

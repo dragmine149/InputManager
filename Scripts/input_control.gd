@@ -8,8 +8,10 @@ var _name: String = "";
 @onready var input_name_field: Label = $Name;
 @onready var input_1: Button = $Input1;
 @onready var input_1_listener: InputManagerListener = $Input1/InputManagerListener;
+@onready var input_1_images: InputDisplayUI = $Input1/Inputs;
 @onready var input_2: Button = $Input2;
 @onready var input_2_listener: InputManagerListener = $Input2/InputManagerListener;
+@onready var input_2_images: InputDisplayUI = $Input2/Inputs;
 
 
 func _on_input_pressed(input_id: int) -> void:
@@ -41,8 +43,12 @@ func update_fields(input_name: String = "") -> void:
 
 	var inputs := InputManager.get_inputs(input_name);
 
-	input_1.text = _get_input_or_empty(inputs, 0);
-	input_2.text = _get_input_or_empty(inputs, 1);
+	#input_1.text = _get_input_or_empty(inputs, 0);
+	#input_2.text = _get_input_or_empty(inputs, 1);
+
+	input_1_images.set_data_from_event(inputs[0]);
+	input_2_images.set_data_from_event(inputs[1]);
+
 
 
 func load_input(input_name: String) -> void:

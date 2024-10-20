@@ -35,3 +35,9 @@ func set_images_and_text(images: Array[String], text: String) -> void:
 	set_text(text);
 
 	img_node.show();
+
+
+func set_data_from_event(event: InputEvent) -> void:
+	set_images(InputManager.get_icon_path(event));
+	set_text(InputManager.get_input_text(event));
+	img_node.show();
