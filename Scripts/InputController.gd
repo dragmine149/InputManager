@@ -1,7 +1,7 @@
 class_name InputController
 extends Resource
 
-var 	inputs := {
+var inputs: Dictionary[String, Array] = {
 
 }
 var _input_count;
@@ -28,9 +28,10 @@ func _set(property: StringName, value: Variant) -> bool:
 func _get_property_list() -> Array[Dictionary]:
 	var properties:Array[Dictionary] = [];
 	for action:String in inputs:
-		var hint_string := ",".join(_get(action).map(func(action:InputEvent) -> String:
-			if action == null: return "";
-			return action.as_text();
+		var hint_string := ",".join(_get(action)
+			.map(func(a:InputEvent) -> String:
+				if a == null: return "";
+				return a.as_text();
 		));
 		properties.append({
 			"name": action.replace('-', '/'),

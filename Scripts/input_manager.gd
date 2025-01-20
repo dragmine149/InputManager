@@ -107,7 +107,7 @@ func _add_input_no_event(input_name: String) -> Array[InputEvent]:
 ## [br][b]input_event -[/b] The event to add to the input. Leaving blank will just add the actio with no event.
 func add_input(input_name: String, input_event: InputEvent = null) -> void:
 	input_name = to_map_name(input_name);
-	var input = _add_input_no_event(input_name);
+	var input := _add_input_no_event(input_name);
 	if input_event != null:
 		var next_pos = input.find(null);
 		# don't like this...
