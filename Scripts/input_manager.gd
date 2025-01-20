@@ -303,16 +303,80 @@ func import_inputs(inputs: InputController) -> void:
 
 #region Display
 
+func _get_icon_path(icon_name: String, icon_group: String) -> String:
+	return "%s/%s/%s" % [
+		ProjectSettings.get_setting("addons/InputManager/icons/folder/main_folder"),
+		ProjectSettings.get_setting("addons/InputManager/icons/folder/%s" % icon_group),
+		ProjectSettings.get_setting("addons/InputManager/icons/%s/%s" % [icon_group, icon_name])
+	];
+
 ## Get a text display localised to the users keyboard layout + modifiers.
 ## [br]If the input is not a key, will return the input text instead.
 ## [br]
 ## [br][b]input -[/b] The input to get the text for.
 func get_input_text(input:InputEvent) -> String:
+	if input == null:
+		return "(Not Assigned)";
+
 	if not input is InputEventKey:
 		return input.as_text();
 
 	var physical_key_modifier = input.get_physical_keycode_with_modifiers();
 	var keycode = DisplayServer.keyboard_get_keycode_from_physical(physical_key_modifier);
 	return OS.get_keycode_string(keycode);
+
+
+const KEYBOARD_TO_IMAGES := {
+	65: ["a", "keyboard"],
+	66: ["b", "keyboard"],
+	67: ["c", "keyboard"],
+	68: ["d", "keyboard"],
+	69: ["e", "keyboard"],
+	70: ["f", "keyboard"],
+	71: ["g", "keyboard"],
+	72: ["h", "keyboard"],
+	73: ["i", "keyboard"],
+	74: ["j", "keyboard"],
+	75: ["k", "keyboard"],
+	76: ["l", "keyboard"],
+	77: ["m", "keyboard"],
+	78: ["n", "keyboard"],
+	79: ["o", "keyboard"],
+	80: ["p", "keyboard"],
+	81: ["q", "keyboard"],
+	82: ["r", "keyboard"],
+	83: ["s", "keyboard"],
+	84: ["t", "keyboard"],
+	85: ["u", "keyboard"],
+	86: ["v", "keyboard"],
+	87: ["w", "keyboard"],
+	88: ["x", "keyboard"],
+	89: ["y", "keyboard"],
+	90: ["z", "keyboard"],
+	4194306: ["tab", "keyboard"],
+	4194325: ["shift", "keyboard"],
+	4194326: ["control", "keyboard"],
+	4194327: ["meta", "keyboard"],
+	4194328: ["alt", "keyboard"]
+}
+
+func get_icon_path(input: InputEvent) -> Array[String]:
+	if input is not InputEventKey:
+		# TODO: Sort out the other inputs later...
+		return [""];
+
+	var code = input.get_keycode_with_modifiers();
+
+	var keycode_info := OS.get_keycode_string(code);
+	var modifiers := keycode_info.split('+');
+
+	var modifier_array: Array[String] = [];
+	for modifier in modifiers:
+		var code_from_modifier := OS.find_keycode_from_string(modifier);
+		if KEYBOARD_TO_IMAGES.has(code_from_modifier):
+			var icon_info: PackedStringArray = KEYBOARD_TO_IMAGES[code_from_modifier];
+			modifier_array.append(_get_icon_path(icon_info[0], icon_info[1]));
+
+	return modifier_array;
 
 #endregion

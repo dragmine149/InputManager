@@ -67,3 +67,4 @@ To uninstall, disable the plugin and then remove the folder. By doing so, settin
 - [Folder](https://icons8.com/icon/71cUHRMvCNMk/mac-folder) icon by [Icons8](https://icons8.com)
 - [Mouse](https://icons8.com/icon/eRF9ENKlYAVl/mouse) icon by [Icons8](https://icons8.com)
 - [F5 Key](https://icons8.com/icon/QA1_AvHyXWnM/f5-key) icon by [Icons8](https://icons8.com)
+- [Input Icons](https://kenney.nl/assets/input-prompts) by [Kenney](https://keeney.nl)

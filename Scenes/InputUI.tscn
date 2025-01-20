@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://bfwsb1hpd2ds1"]
+[gd_scene load_steps=3 format=3 uid="uid://bfwsb1hpd2ds1"]
 
 [ext_resource type="Script" path="res://addons/input_manager/Scripts/input_ui.gd" id="1_tfmxv"]
+[ext_resource type="PackedScene" uid="uid://daeaihfaq7kn0" path="res://addons/input_manager/Scenes/input_images.tscn" id="2_qj384"]
 
 [node name="InputUI" type="PanelContainer"]
 anchors_preset = 15
@@ -12,18 +13,23 @@ script = ExtResource("1_tfmxv")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
+alignment = 1
 
 [node name="Title" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 text = "Please enter input"
 horizontal_alignment = 1
 
-[node name="Input" type="Label" parent="VBoxContainer"]
+[node name="Seperator2" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 6
-text = "Waiting for input..."
-horizontal_alignment = 1
-vertical_alignment = 1
+size_flags_vertical = 3
+
+[node name="Inputs" parent="VBoxContainer" instance=ExtResource("2_qj384")]
+layout_mode = 2
+
+[node name="Seperator" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
