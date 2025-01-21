@@ -11,7 +11,7 @@ func _init() -> void:
 
 
 func _get(property: StringName) -> Variant:
-	var empty: Array[InputEvent] = [];
+	var empty: Array = [];
 	empty.resize(_input_count);
 	empty.fill(null);
 	return inputs.get(property, empty);
@@ -23,23 +23,6 @@ func _set(property: StringName, value: Variant) -> bool:
 
 	inputs[property] = value;
 	return true;
-
-
-func _get_property_list() -> Array[Dictionary]:
-	var properties:Array[Dictionary] = [];
-	for action:String in inputs:
-		var hint_string := ",".join(_get(action)
-			.map(func(a:InputEvent) -> String:
-				if a == null: return "";
-				return a.as_text();
-		));
-		properties.append({
-			"name": action.replace('-', '/'),
-			"type": TYPE_STRING_NAME,
-			"hint": PROPERTY_HINT_ENUM,
-			"hint_string": hint_string,
-		})
-	return properties;
 
 
 func get_names() -> Array:
