@@ -88,6 +88,9 @@ func _init() -> void:
 func _add_user_signal(input_name: String) -> void:
 	input_name = input_name.replace(' ', '_');
 	if not has_signal("input_%s_changed" % input_name):
+		if _verbose:
+			print_rich("[color=green]Adding signal: input_%s_changed[/color]" % input_name);
+
 		add_user_signal("input_%s_changed" % input_name);
 
 
