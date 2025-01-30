@@ -1,0 +1,14 @@
+# Added
+- Icons for keyboard users! Icons are provided by [Kenney](https://kenney.nl/) but can be changed in the settings. (Note: Might change how the settings work w/ icon paths in the future).
+- Settings for all the icon paths
+- Settings for icon settings (to use icons or not to use)
+- `InputManager.get_icon_path()` which returns all the project path of all the icons needed to show that event.
+- Scene (and Script) `input_images` which is a custom scene to display multiple images for not just the input but also any modifiers of said input
+
+# Updated
+- How settings are loaded (Just makes it easier for me to add settings later)
+- How settings are removed
+
+# Bug Fixes
+- Fixed an issue where `InputManager.get_input_text()` would cause an error if something other than an InputEvent was passed in. (Error on null). It not returns a "(Not Assigned)" instead.
+- Fixed an issue where the export plugin would cause an error on the plugin being disabled. (Apparently the export plugin did not need to be freeded...)

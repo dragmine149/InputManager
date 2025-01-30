@@ -1,0 +1,40 @@
+[gd_scene load_steps=4 format=3 uid="uid://colhwktjubvr8"]
+
+[ext_resource type="Script" uid="uid://bw3wovxl1lkvn" path="res://addons/input_manager/Scripts/menu.gd" id="1_1gfm4"]
+[ext_resource type="Script" uid="uid://dyxlb2b7uwxa6" path="res://Demos/action_display.gd" id="2_emfxk"]
+
+[sub_resource type="Theme" id="Theme_3or22"]
+MarginContainer/constants/margin_bottom = 10
+MarginContainer/constants/margin_left = 10
+MarginContainer/constants/margin_right = 10
+MarginContainer/constants/margin_top = 10
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="InputManagerMenu" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1gfm4")
+category_theme = SubResource("Theme_3or22")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -22.3333
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 30
+script = ExtResource("2_emfxk")
