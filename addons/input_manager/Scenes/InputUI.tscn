@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bfwsb1hpd2ds1"]
 
-[ext_resource type="Script" uid="uid://dr2dar6xexcyv" path="res://addons/input_manager/Scripts/input_ui.gd" id="1_tfmxv"]
+[ext_resource type="Script" path="res://addons/input_manager/Scripts/input_ui.gd" id="1_tfmxv"]
 [ext_resource type="PackedScene" uid="uid://daeaihfaq7kn0" path="res://addons/input_manager/Scenes/input_images.tscn" id="2_qj384"]
 
 [node name="InputUI" type="PanelContainer"]

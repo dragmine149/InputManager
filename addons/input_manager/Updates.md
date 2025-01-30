@@ -1,5 +1,8 @@
 # Update Log
 
+## 1.1.1
+Backported to v4.3 (mainly because asset store doesn't have a v4.4 option yet)
+
 ## 1.1.0
 Some all around improvements as well as some new features
 

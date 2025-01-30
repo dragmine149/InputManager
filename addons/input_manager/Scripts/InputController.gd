@@ -1,7 +1,7 @@
 class_name InputController
 extends Resource
 
-var inputs: Dictionary[String, Array] = {
+var inputs: Dictionary = {
 
 }
 var _input_count;

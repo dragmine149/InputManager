@@ -67,3 +67,7 @@ func load_input(input_name: String) -> void:
 
 func _on_input_1_pressed(extra_arg_0: int) -> void:
 	pass # Replace with function body.
+
+
+func _on_input_2_pressed(extra_arg_0: int) -> void:
+	pass # Replace with function body.

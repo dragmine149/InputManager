@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://colhwktjubvr8"]
 
-[ext_resource type="Script" uid="uid://bw3wovxl1lkvn" path="res://addons/input_manager/Scripts/menu.gd" id="1_1gfm4"]
-[ext_resource type="Script" uid="uid://dyxlb2b7uwxa6" path="res://Demos/action_display.gd" id="2_emfxk"]
+[ext_resource type="Script" path="res://addons/input_manager/Scripts/menu.gd" id="1_1gfm4"]
+[ext_resource type="Script" path="res://Demos/action_display.gd" id="2_emfxk"]
 
 [sub_resource type="Theme" id="Theme_3or22"]
 MarginContainer/constants/margin_bottom = 10

@@ -30,3 +30,5 @@ export_presets.cfg
 
 addons/*
 !addons/input_manager
+addons/input_manager/Assets/kenney_input-prompts/
+!addons/input_manager/Assets/kenney_input-prompts/Keyboard & Mouse/Double
