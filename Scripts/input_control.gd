@@ -1,17 +1,17 @@
-extends HBoxContainer
+extends MarginContainer
 
 signal input_change_request(input_name: String, input_id: int);
 
 var in_line: bool = false;
 var _name: String = "";
 
-@onready var input_name_field: Label = $Name;
-@onready var input_1: Button = $Input1;
-@onready var input_1_listener: InputManagerListener = $Input1/InputManagerListener;
-@onready var input_1_images: InputDisplayUI = $Input1/Inputs;
-@onready var input_2: Button = $Input2;
-@onready var input_2_listener: InputManagerListener = $Input2/InputManagerListener;
-@onready var input_2_images: InputDisplayUI = $Input2/Inputs;
+@onready var input_name_field: Label = $InputControl/Name;
+@onready var input_1: Button = $InputControl/Control/Input1;
+@onready var input_1_listener: InputManagerListener = $InputControl/Control/Input1/InputManagerListener;
+@onready var input_1_images: InputDisplayUI = $InputControl/Control/Inputs;
+@onready var input_2: Button = $InputControl/Control2/Input2;
+@onready var input_2_listener: InputManagerListener = $InputControl/Control2/Input2/InputManagerListener;
+@onready var input_2_images: InputDisplayUI = $InputControl/Control2/Inputs2;
 
 
 func _on_input_pressed(input_id: int) -> void:
@@ -63,3 +63,7 @@ func load_input(input_name: String) -> void:
 		input_name_field.text = _name.rsplit("/", true, 1)[1];
 	InputManager.connect("input_%s_changed" % InputManager.to_map_name(_name).replace(' ', '_'), update_fields);
 	update_fields(input_name);
+
+
+func _on_input_1_pressed(extra_arg_0: int) -> void:
+	pass # Replace with function body.

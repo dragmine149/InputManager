@@ -93,6 +93,7 @@ func load_input_ui() -> void:
 
 
 func input_change_request(input_name: String, input_id: int) -> void:
+	#print("Change requested. Showing UI");
 	container.hide();
 	input_ui.show();
 	input_ui.load_input(input_name, input_id);

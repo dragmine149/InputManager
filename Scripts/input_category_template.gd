@@ -7,8 +7,8 @@ var input_theme: Theme;
 var in_line: bool = false;
 var category_template: PackedScene = preload("res://addons/input_manager/Scenes/input_category_template.tscn");
 var input_template: PackedScene = preload("res://addons/input_manager/Scenes/input_control.tscn");
-@onready var container: VBoxContainer = $MarginContainer/VBoxContainer;
-@onready var title: Label = $MarginContainer/VBoxContainer/Title;
+@onready var container: VBoxContainer = $MarginContainer/ScrollContainer/VBoxContainer;
+@onready var title: Label = $MarginContainer/ScrollContainer/VBoxContainer/Title;
 
 
 func set_themes(cat_theme: Theme, in_theme: Theme) -> void:

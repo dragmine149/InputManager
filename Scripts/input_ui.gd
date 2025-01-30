@@ -61,7 +61,8 @@ func load_input(key: String, index: int) -> void:
 
 	title.text = "Please enter input for: %s" % key;
 	var old_input_text := InputManager.get_input_text(old_input) if old_input != null else "None";
-	input_display.set_text("Old input: %s\n\nWaiting for input..." % old_input_text);
+	#input_display.set_text("Old input: %s\n\nWaiting for input..." % old_input_text);
+	input_display.set_images_and_text([], "Old input: %s\n\nWaiting for input..." % old_input_text);
 	can_input = true;
 	submit.disabled = true;
 

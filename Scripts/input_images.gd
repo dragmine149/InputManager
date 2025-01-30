@@ -7,37 +7,35 @@ class_name InputDisplayUI
 @onready var img4: TextureRect = $HBoxContainer/TextureRect4;
 @onready var img5: TextureRect = $HBoxContainer/TextureRect5;
 @onready var img_node: HBoxContainer = $HBoxContainer;
-@onready var text_node: Label = $Label;
+@onready var text_node: Label = $MarginContainer/Label;
 @onready var texture_nodes: Array[TextureRect] = [img1, img2, img3, img4, img5];
 
-func set_images(images: Array[String]) -> void:
-	img_node.show();
-	text_node.hide();
+func check_for_images(images: Array[String]) -> bool:
+	return images.filter(func(img: String) -> bool: return not img.is_empty()).is_empty();
 
+func _set_images(images: Array[String]) -> void:
 	images.resize(5);
 
 	for texture_id in texture_nodes.size():
 		if images[texture_id] == "":
 			texture_nodes[texture_id].texture = null;
+			texture_nodes[texture_id].hide();
 			continue;
 		texture_nodes[texture_id].texture = load(images[texture_id]);
+		texture_nodes[texture_id].show();
 
 
-func set_text(text: String) -> void:
-	img_node.hide();
-	text_node.show();
-
+func _set_text(text: String) -> void:
 	text_node.text = text;
 
 
 func set_images_and_text(images: Array[String], text: String) -> void:
-	set_images(images);
-	set_text(text);
+	_set_images(images);
+	_set_text(text);
 
-	img_node.show();
+	img_node.visible = not check_for_images(images);
+	text_node.visible = not text.is_empty();
 
 
 func set_data_from_event(event: InputEvent) -> void:
-	set_images(InputManager.get_icon_path(event));
-	set_text(InputManager.get_input_text(event));
-	img_node.show();
+	set_images_and_text(InputManager.get_icon_path(event), InputManager.get_input_text(event));

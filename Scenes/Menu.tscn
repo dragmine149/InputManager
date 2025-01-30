@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://lpp4oj20kgj6"]
 
-[ext_resource type="Script" path="res://addons/input_manager/Scripts/menu.gd" id="1_2sy0x"]
+[ext_resource type="Script" uid="uid://bw3wovxl1lkvn" path="res://addons/input_manager/Scripts/menu.gd" id="1_2sy0x"]
 [ext_resource type="PackedScene" uid="uid://bfwsb1hpd2ds1" path="res://addons/input_manager/Scenes/InputUI.tscn" id="2_h6gcc"]
 
 [sub_resource type="Theme" id="Theme_1rd45"]

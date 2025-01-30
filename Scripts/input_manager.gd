@@ -16,6 +16,7 @@ signal on_inputs_loaded
 ## different keys on the same input
 @export_range(1, 2) var input_count: int = 2;
 
+# Default inputs, one that cause it to break. Might ned to do something with these at one point.
 const _defaults: Array[StringName] = [
 	&"ui_accept", &"ui_select", &"ui_cancel", &"ui_focus_next", &"ui_focus_prev", &"ui_left",
 	&"ui_right", &"ui_up", &"ui_down", &"ui_page_up", &"ui_page_down", &"ui_home", &"ui_end",
@@ -33,18 +34,18 @@ const _defaults: Array[StringName] = [
 	&"ui_text_skip_selection_for_next_occurrence", &"ui_text_clear_carets_and_selection",
 	&"ui_text_toggle_insert_mode", &"ui_menu", &"ui_text_submit", &"ui_graph_duplicate",
 	&"ui_graph_delete", &"ui_filedialog_up_one_level", &"ui_filedialog_refresh",
-	&"ui_filedialog_show_hidden", &"ui_swap_input_direction", &"spatial_editor/freelook_left",
-	&"spatial_editor/freelook_right", &"spatial_editor/freelook_forward",
-	&"spatial_editor/freelook_backwards", &"spatial_editor/freelook_up",
-	&"spatial_editor/freelook_down", &"spatial_editor/freelook_speed_modifier",
-	&"spatial_editor/freelook_slow_modifier", &"ui_text_backspace_word.macos",
-	&"ui_text_backspace_all_to_left.macos", &"ui_text_delete_word.macos",
-	&"ui_text_delete_all_to_right.macos", &"ui_text_caret_word_left.macos",
-	&"ui_text_caret_word_right.macos", &"ui_text_caret_line_start.macos",
-	&"ui_text_caret_line_end.macos", &"ui_text_caret_document_start.macos",
-	&"ui_text_caret_document_end.macos", &"ui_text_caret_add_below.macos",
-	&"ui_text_caret_add_above.macos", &"ui_text_scroll_up.macos", &"ui_text_scroll_down.macos",
-	&"ui_text_select_word_under_caret.macos"
+	&"ui_filedialog_show_hidden", &"ui_swap_input_direction", &"ui_unicode_start",
+	&"ui_text_backspace_word.macos", &"ui_text_backspace_all_to_left.macos",
+	&"ui_text_delete_word.macos", &"ui_text_delete_all_to_right.macos",
+	&"ui_text_caret_word_left.macos", &"ui_text_caret_word_right.macos",
+	&"ui_text_caret_line_start.macos", &"ui_text_caret_line_end.macos",
+	&"ui_text_caret_document_start.macos", &"ui_text_caret_document_end.macos",
+	&"ui_text_caret_add_below.macos", &"ui_text_caret_add_above.macos", &"ui_text_scroll_up.macos",
+	&"ui_text_scroll_down.macos", &"ui_text_select_word_under_caret.macos",
+	&"spatial_editor/freelook_left", &"spatial_editor/freelook_right",
+	&"spatial_editor/freelook_forward", &"spatial_editor/freelook_backwards",
+	&"spatial_editor/freelook_up", &"spatial_editor/freelook_down",
+	&"spatial_editor/freelook_speed_modifier", &"spatial_editor/freelook_slow_modifier"
 ];
 var _inputs := InputController.new();
 var _call_change := true;
