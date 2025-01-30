@@ -61,7 +61,7 @@ func load_input(input_name: String) -> void:
 	input_name_field.text = _name;
 	if _name.contains('/'):
 		input_name_field.text = _name.rsplit("/", true, 1)[1];
-	InputManager.connect("input_%s_changed" % InputManager.to_map_name(_name).replace(' ', '_'), update_fields);
+	InputManager.connect("input_%s_changed" % InputManager.to_map_name(input_name).replace(' ', '_'), update_fields);
 	update_fields(input_name);
 
 

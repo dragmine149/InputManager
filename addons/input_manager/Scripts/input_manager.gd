@@ -16,6 +16,13 @@ signal on_inputs_loaded
 ## different keys on the same input
 @export_range(1, 2) var input_count: int = 2;
 
+@export var button_test: bool:
+	set(v):
+		#print(get_input_data());
+		for input in get_input_data():
+			print(get_inputs(input));
+
+
 # Default inputs, one that cause it to break. Might ned to do something with these at one point.
 const _defaults: Array[StringName] = [
 	&"ui_accept", &"ui_select", &"ui_cancel", &"ui_focus_next", &"ui_focus_prev", &"ui_left",
@@ -82,6 +89,9 @@ func _init() -> void:
 func _add_user_signal(input_name: String) -> void:
 	input_name = input_name.replace(' ', '_');
 	if not has_signal("input_%s_changed" % input_name):
+		if _verbose:
+			print_rich("[color=green]Adding signal: input_%s_changed[/color]" % input_name);
+
 		add_user_signal("input_%s_changed" % input_name);
 
 
@@ -104,11 +114,11 @@ func _add_input_no_event(input_name: String) -> Array[InputEvent]:
 
 ## Add another input under a specified name
 ## [br]
-## [br][b]input_name -[/b] The name of the input to add a new input to
-## [br][b]input_event -[/b] The event to add to the input. Leaving blank will just add the actio with no event.
+## [br][param input_name] - The name of the input to add a new input to
+## [br][param input_event] - The event to add to the input. Leaving blank will just add the actio with no event.
 func add_input(input_name: String, input_event: InputEvent = null) -> void:
 	input_name = to_map_name(input_name);
-	var input = _add_input_no_event(input_name);
+	var input := _add_input_no_event(input_name);
 	if input_event != null:
 		var next_pos = input.find(null);
 		# don't like this...
@@ -128,9 +138,9 @@ func add_input(input_name: String, input_event: InputEvent = null) -> void:
 
 ## Change an input from one type to another
 ## [br]
-## [br][b]input_name -[/b] The name of the input to change
-## [br][b]index -[/b] The position of the old one to remove.
-## [br][b]new_input -[/b] The new input value
+## [br][param input_name] - The name of the input to change
+## [br][param index] - The position of the old one to remove.
+## [br][param new_input] - The new input value
 func change_input(input_name: String, index: int, new_input: InputEvent) -> void:
 	input_name = to_map_name(input_name);
 	var input_list: Array[InputEvent] = _inputs.get(input_name);
@@ -142,7 +152,7 @@ func change_input(input_name: String, index: int, new_input: InputEvent) -> void
 
 ## Returns a list of all the inputs for that given input
 ## [br]
-## [br][b]input_name -[/b] The name of the input to get the inputs for
+## [br][param input_name] - The name of the input to get the inputs for
 func get_inputs(input_name: String) -> Array[InputEvent]:
 	input_name = to_map_name(input_name);
 	return _inputs.get(input_name);
@@ -151,7 +161,7 @@ func get_inputs(input_name: String) -> Array[InputEvent]:
 ## Returns a list of all the inputs for that given input. But as a single string instead
 ## [br] Example result: [code]"Ctrl-M, Ctrl-L, A, M"[/code]
 ## [br]
-## [br][b]input_name -[/b] The name of the input to get the inputs for
+## [br][param input_name] - The name of the input to get the inputs for
 func get_inputs_as_list(input_name: String) -> String:
 	input_name = to_map_name(input_name);
 	var input_list: Array[InputEvent] = _inputs.get(input_name);
@@ -160,9 +170,13 @@ func get_inputs_as_list(input_name: String) -> String:
 	));
 
 
+func get_input_data() -> Array:
+	return _inputs.get_names();
+
+
 ## Returns a list of all the input names.
 ## [br]
-## [br][b]input_category -[/b] The category to get the inputs for. If empty, all top level categories
+## [br][param input_category] - The category to get the inputs for. If empty, all top level categories
 ## are returned.
 func get_input_names(input_category: String = "") -> Array:
 	var input_list: Array = _inputs.get_names().map(func(input_name: String) -> String:
@@ -190,7 +204,7 @@ func get_input_names(input_category: String = "") -> Array:
 ## Returns a list of all the sub categories under a specific category.
 ## [br] Will only return that section of categories and no sub-categories.
 ## [br]
-## [br][b]input_category -[/b] The category to get the inputs for. If empty, all top level categories
+## [br][param input_category] - The category to get the inputs for. If empty, all top level categories
 ## are returned.
 func get_input_categories(input_category: String = "") -> Array:
 	if not input_category.ends_with('/') and input_category != "":
@@ -219,8 +233,8 @@ func get_input_categories(input_category: String = "") -> Array:
 
 ## Removes a specific input from the list.
 ## [br]
-## [br][b]input_name -[/b] The name of the input to remove the item from
-## [br][b]index -[/b] The position of the old one to remove.
+## [br][param input_name] - The name of the input to remove the item from
+## [br][param index] - The position of the old one to remove.
 func remove_input(input_name: String, index: int) -> void:
 	input_name = to_map_name(input_name);
 	var input_list: Array[InputEvent] = _inputs.get(input_name);
@@ -234,8 +248,8 @@ func remove_input(input_name: String, index: int) -> void:
 
 ## Erases all existance of that input. Unlike [remove_input] which only does the index/action
 ## [br]
-## [br][b]input_name -[/b] The name of the input to erase.
-## [br][b]remove_signal -[/b] To also remove the signal upon removing the input.
+## [br][param input_name] - The name of the input to erase.
+## [br][param remove_signal] - To also remove the signal upon removing the input.
 func erase_input(input_name: String, remove_signal: bool = true) -> void:
 	input_name = to_map_name(input_name);
 	_inputs.set(input_name, null);
@@ -247,14 +261,14 @@ func erase_input(input_name: String, remove_signal: bool = true) -> void:
 ## Returns the input name as it would be as a map name. Useful in situations like [method Input.is_action_pressed]
 ## whilst keeping the categorisation ability
 ## [br]
-## [br][b]input_name -[/b] The input name to translate.
+## [br][param input_name] - The input name to translate.
 func to_map_name(input_name: String) -> String:
 	return input_name.replace('/', '-');
 
 
 ## Does the same as [method input_name_to_map_name] but in the other direction
 ## [br]
-## [br][b]input_name -[/b] The input name to translate.
+## [br][param input_name] - The input name to translate.
 func to_input_name(map_name: String) -> String:
 	return map_name.replace('-', '/');
 
@@ -274,7 +288,7 @@ func save_inputs() -> void:
 
 ## Load inputs from a given file or from the default path if no file is given.
 ## [br]
-## [br][b]file_path -[/b] The path to load from. If not provided, will use the default path as set in
+## [br][param file_path] - The path to load from. If not provided, will use the default path as set in
 ## ProjectSettings/addons/InputManager
 func load_inputs(file_path: String = "") -> void:
 	if file_path == "" or file_path == null:
@@ -291,7 +305,7 @@ func export_inputs() -> InputController:
 
 ## Import inputs from a different place.
 ## [br]
-## [br][b]inputs -[/b] The inputs to load.
+## [br][param inputs] - The inputs to load.
 func import_inputs(inputs: InputController) -> void:
 	for action in _inputs.get_names().duplicate():
 		erase_input(action, false);
@@ -314,7 +328,7 @@ func _get_icon_path(icon_name: String, icon_group: String) -> String:
 ## Get a text display localised to the users keyboard layout + modifiers.
 ## [br]If the input is not a key, will return the input text instead.
 ## [br]
-## [br][b]input -[/b] The input to get the text for.
+## [br][param input] - The input to get the text for.
 func get_input_text(input:InputEvent) -> String:
 	if input == null:
 		return "(Not Assigned)";
