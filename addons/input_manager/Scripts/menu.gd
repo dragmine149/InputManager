@@ -8,7 +8,8 @@ extends Control
 @export var background_colour: Color = Color.WEB_GRAY:
 	set(v):
 		background_colour = v;
-		color_rect.color = v;
+		if color_rect != null:
+			color_rect.color = v;
 ## The theme for the categories. (Will use this nodes theme by default if no specified)
 @export var category_theme: Theme;
 ## The theme for the inputs. (Will use the category theme by default if not specified)
